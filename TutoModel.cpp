@@ -8,7 +8,6 @@
 #include "input.h"
 #include "camera.h"
 #include "Shadow.h"
-#include "bullet.h"
 #include "effect.h"
 #include "player.h"
 #include "Game.h"

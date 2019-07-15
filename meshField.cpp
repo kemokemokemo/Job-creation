@@ -113,6 +113,7 @@ void UpdateMeshField(void)
 		}
 	}
 
+	//ワイヤーフレームの表示
 	if (bLUse == true)
 	{
 		pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -128,11 +129,11 @@ void UpdateMeshField(void)
 
 	if (nCntNami<=200)
 	{
-		g_PosMeshField.y += sinf(3.0f);
+		g_PosMeshField.y += sinf(WAVE_H);
 	}
 	if (nCntNami >= 200)
 	{
-		g_PosMeshField.y -= sinf(3.0f);
+		g_PosMeshField.y -= sinf(WAVE_H);
 	}
 	if (nCntNami >= 400)
 	{

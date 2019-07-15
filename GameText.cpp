@@ -5,7 +5,7 @@
 //
 //=============================================================================
 #include "GameText.h"
-#include "Title.h"//インクルードファイル
+#include "Title.h"
 #include "input.h"
 #include "fade.h"
 
@@ -14,11 +14,11 @@
 //=============================================================================
 #define TEXT_TEX01 "DATA/TEX/satan_rogo.png"		//読み込むテクスチャファイル名
 #define TEXT_TEX02 "DATA/TEX/GameOver000.png"		//読み込むテクスチャファイル名
-#define TEXT_TEX03 "DATA/TEX/text000.png"		//読み込むテクスチャファイル名
-#define TEXT_TEX04 "DATA/TEX/ENTER.png"		//読み込むテクスチャファイル名
-#define TEXT_TEX05 "DATA/TEX/tuto2.png"		//読み込むテクスチャファイル名
-#define TEXT_TEX06 "DATA/TEX/zannki.png"		//読み込むテクスチャファイル名
-#define TEXT_TEX07 "DATA/TEX/kuria.png"		//読み込むテクスチャファイル名
+#define TEXT_TEX03 "DATA/TEX/text000.png"			//読み込むテクスチャファイル名
+#define TEXT_TEX04 "DATA/TEX/ENTER.png"				//読み込むテクスチャファイル名
+#define TEXT_TEX05 "DATA/TEX/tuto2.png"				//読み込むテクスチャファイル名
+#define TEXT_TEX06 "DATA/TEX/zannki.png"			//読み込むテクスチャファイル名
+#define TEXT_TEX07 "DATA/TEX/kuria.png"				//読み込むテクスチャファイル名
 
 //=============================================================================
 // プロトタイプ宣言
@@ -145,8 +145,8 @@ void InitGameText(void)
 //=============================================================================
 void UninitGameText(void)
 {
-	int nCntText = 0;
-	for (nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
+
+	for (int nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
 	{
 		// テクスチャの開放
 		if (g_apTextureGameText[nCntText] != NULL)
@@ -155,8 +155,8 @@ void UninitGameText(void)
 			g_apTextureGameText[nCntText] = NULL;
 		}
 
+		// 頂点バッファの開放
 		if (g_pVtxBuffGameText != NULL)
-			// 頂点バッファの開放
 		{
 			g_pVtxBuffGameText->Release();
 			g_pVtxBuffGameText = NULL;
@@ -176,8 +176,6 @@ void UpdateGameText(void)
 //=============================================================================
 void DrawGameText(void)
 {
-	int nCntText = 0;
-
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	// 頂点バッファをデバイスのデータストリームにバインド
@@ -186,7 +184,7 @@ void DrawGameText(void)
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
+	for (int nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
 	{
 		if (g_aGameText[nCntText].bUse == true)
 		{
@@ -204,10 +202,9 @@ void DrawGameText(void)
 void SetGameText(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXCOLOR col, int sizex, int sizey, int nType)
 {
 	VERTEX_2D *pVtx;
-	int nCntText = 0;
 
 	g_pVtxBuffGameText->Lock(0, 0, (void**)&pVtx, 0);		//頂点バッファのロック
-	for (nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
+	for (int nCntText = 0; nCntText < MAX_GAMETEXT; nCntText++)
 	{
 		if (g_aGameText[nCntText].bUse == false)
 		{

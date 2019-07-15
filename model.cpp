@@ -8,7 +8,6 @@
 #include "input.h"
 #include "camera.h"
 #include "Shadow.h"
-#include "bullet.h"
 #include "effect.h"
 #include "player.h"
 #include "Game.h"
@@ -21,8 +20,17 @@
 // マクロ定義
 //=============================================================================
 #define MODEL_FILE		"DATA/road/model.txt"					//ファイル名
-
 #define SPEED			(0.5f)									//プレイヤースピード
+#define GAME_END		(30)									//ゲームの終了時間
+#define MODEL_TYPE5		(5)										//モデルのタイプ_5
+#define MODEL_TYPE6		(6)										//モデルのタイプ_6
+#define MODEL_TYPE10	(10)									//モデルのタイプ_10
+#define MODEL_TYPE11	(11)									//モデルのタイプ_11
+#define MODEL_TYPE12	(12)									//モデルのタイプ_12
+#define MODEL_TYPE19	(19)									//モデルのタイプ_19
+#define MODEL_TYPE20	(20)									//モデルのタイプ_20
+#define MODEL_TYPE21	(21)									//モデルのタイプ_21
+#define MODEL_TYPE24	(24)									//モデルのタイプ_24
 
 //=============================================================================
 // グローバル変数
@@ -38,10 +46,9 @@ int g_nCntCrear;
 //=============================================================================
 void InitModel(void)
 {
-	int nCntModel = 0;
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	for (nCntModel = 0; nCntModel < MAX_MODEL; nCntModel++)
+	for (int nCntModel = 0; nCntModel < MAX_MODEL; nCntModel++)
 	{
 		// 位置・向きの初期設定
 		g_Model[nCntModel].Pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
@@ -67,7 +74,7 @@ void InitModel(void)
 	//==============================
 	LoadModelText();
 
-	for(nCntModel = 0; nCntModel < g_Model[nCntModel].nLoad; nCntModel++)
+	for(int nCntModel = 0; nCntModel < g_Model[nCntModel].nLoad; nCntModel++)
 	{
 		// Xファイルの読み込み
 		D3DXLoadMeshFromX(g_LoadModel[nCntModel].pXFileName,					// 読み込むXファイル名
@@ -108,7 +115,7 @@ void InitModel(void)
 	DWORD sizeFVF;							//頂点フォーマットのサイズ
 	BYTE *pVertexBuffer;					//頂点バッファのポインタ
 
-	for (nCntModel = 0; nCntModel < g_Model[nCntModel].MaxModel; nCntModel++)
+	for (int nCntModel = 0; nCntModel < g_Model[nCntModel].MaxModel; nCntModel++)
 	{
 		//頂点数を取得
 		nNumVertices = g_LoadModel[g_Model[nCntModel].nTypeModel].pMeshModel->GetNumVertices();
@@ -346,19 +353,19 @@ bool ColisionModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * move
 							{
 								pPos->x = g_Model[nCntModel].vtxMinModel.x + g_Model[nCntModel].Pos.x - pPlayer->size.x;
 
-								if (g_Model[nCntModel].nTypeModel == 10)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE10)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag1 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 19)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE19)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag2 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 20)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE20)
 								{
 									if (pPlayer->bClearFlag1 == true && pPlayer->bClearFlag2 == true)
 									{
@@ -372,19 +379,19 @@ bool ColisionModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * move
 								pPosOld->x + pPlayer->size.x > g_Model[nCntModel].vtxMaxModel.x + g_Model[nCntModel].Pos.x)
 							{
 								pPos->x = g_Model[nCntModel].vtxMaxModel.x + g_Model[nCntModel].Pos.x + pPlayer->size.x;
-								if (g_Model[nCntModel].nTypeModel == 10)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE10)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag1 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 19)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE19)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag2 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 20)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE20)
 								{
 									if (pPlayer->bClearFlag1 == true && pPlayer->bClearFlag2 == true)
 									{
@@ -406,19 +413,19 @@ bool ColisionModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * move
 								pPosOld->z - pPlayer->size.z < g_Model[nCntModel].vtxMinModel.z + g_Model[nCntModel].Pos.z)
 							{
 								pPos->z = g_Model[nCntModel].vtxMinModel.z + g_Model[nCntModel].Pos.z - pPlayer->size.z;
-								if (g_Model[nCntModel].nTypeModel == 10)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE10)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag1 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 19)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE19)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag2 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 20)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE20)
 								{
 									if (pPlayer->bClearFlag1 == true && pPlayer->bClearFlag2 == true)
 									{
@@ -432,19 +439,19 @@ bool ColisionModel(D3DXVECTOR3 * pPos, D3DXVECTOR3 * pPosOld, D3DXVECTOR3 * move
 								pPosOld->z + pPlayer->size.z > g_Model[nCntModel].vtxMaxModel.z + g_Model[nCntModel].Pos.z)
 							{
 								pPos->z = g_Model[nCntModel].vtxMaxModel.z + g_Model[nCntModel].Pos.z + pPlayer->size.z;
-								if (g_Model[nCntModel].nTypeModel == 10)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE10)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag1 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 19)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE19)
 								{
 									g_Model[nCntModel].bUse = false;
 									pPlayer->bClearFlag2 = true;
 									PlaySound(SOUND_LABEL_SE_KEYGET);
 								}
-								if (g_Model[nCntModel].nTypeModel == 20)
+								if (g_Model[nCntModel].nTypeModel == MODEL_TYPE20)
 								{
 									if (pPlayer->bClearFlag1 == true && pPlayer->bClearFlag2 == true)
 									{
@@ -663,7 +670,7 @@ void LoadModelText(void)
 
 									g_Model[nCntModel].bUse = true;
 
-									if (g_Model[nCntModel].nTypeModel == 24)
+									if (g_Model[nCntModel].nTypeModel == MODEL_TYPE24)
 									{
 										g_Model[nCntModel].bUse = false;
 									}
@@ -683,6 +690,7 @@ void LoadModelText(void)
 		MessageBox(NULL, "キャラクター情報ファイルが開けませんでした。", NULL, MB_OK);
 	}
 }
+
 //===============================================================================
 // モデルの読み込み
 //===============================================================================
@@ -700,12 +708,12 @@ void CrearModel(void)
 		{
 			PlaySound(SOUND_LABEL_SE_CLEAR);
 			g_nCntCrear++;
-			if (g_Model[nCntModel].nTypeModel == 21)
+			if (g_Model[nCntModel].nTypeModel == MODEL_TYPE21)
 			{
 				g_Model[nCntModel].rot.z = -0.8f;
 			}
 
-			if (g_Model[nCntModel].nTypeModel == 24)
+			if (g_Model[nCntModel].nTypeModel == MODEL_TYPE24)
 			{
 				g_Model[nCntModel].bUse = true;
 			}
@@ -715,15 +723,12 @@ void CrearModel(void)
 				SetGameText(D3DXVECTOR3(670.0f, 600.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 400, 200, 6);
 			}
 
-			if (g_nCntCrear >= 30)
+			if (g_nCntCrear >= GAME_END)
 			{
-
-					SetGameState(GAMESTATE_END);
-					//プレイヤーの初期化処理
-					InitPlayer();
-
+				SetGameState(GAMESTATE_END);
+				//プレイヤーの初期化処理
+				InitPlayer();
 			}
 		}
 	}
-
 }

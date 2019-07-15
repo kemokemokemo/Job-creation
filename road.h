@@ -34,7 +34,6 @@ typedef struct
 //=============================================================================
 void InitLoad(void);
 void LoadData(void);   // ÉçÅ[Éhä÷êî
-void LoadObject(void);
 ROAD *GetLoad(void);
 
 #endif

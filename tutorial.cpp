@@ -11,10 +11,8 @@
 #include "model.h"
 #include "input.h"
 #include "Shadow.h"
-#include "bullet.h"
 #include "meshField.h"
 #include "meshFwall.h"
-#include "Explosion.h"
 #include "effect.h"
 #include "player.h"
 #include "fade.h"
@@ -24,6 +22,7 @@
 #include "TutoModel.h"
 #include "Controlar.h"
 #include "sound.h"
+#include "ice.h"
 
 //====================================================================================================
 // マクロ定義
@@ -64,33 +63,25 @@ void InitTutorial(void)
 	//プレイヤーの初期化処理
 	InitPlayer();
 
-	//弾の初期化処理
-	InitBullet();
+	//氷の初期化処理
+	InitIce();
 
 	//フィールドの初期化処理
 	InitMeshField();
 
 	//壁の初期化処理
 	InitMeshWall();
-
-	//爆発の初期化処理
-	InitExplosion();
-
-	//エフェクトの初期化処理
-	InitEffect();
-
-	LoadObject();
-
-	InitGameText();
-
-	SetGameText(D3DXVECTOR3(1000.0f, 600.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 210, 180, 4);
-
-	//SetGameText(D3DXVECTOR3(1100.0f, 550.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 180, 180, 4);
-
 	SetMeshWall(D3DXVECTOR3(1700.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, 1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(-1700.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, -1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(0.0f, 45.0f, -1700.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(0.0f, 45.0f, 1700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	//エフェクトの初期化処理
+	InitEffect();
+
+	//テキストの初期化処理
+	InitGameText();
+	SetGameText(D3DXVECTOR3(1000.0f, 600.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 210, 180, 4);
 }
 
 //================================================================================================
@@ -113,9 +104,8 @@ void UninitTutorial(void)
 	//プレイヤーの終了処理
 	UninitPlayer();
 
-
-	//バレットの終了処理
-	UninitBullet();
+	//氷の終了処理
+	UninitIce();
 
 	//フィールドの終了処理
 	UninitMeshField();
@@ -123,14 +113,11 @@ void UninitTutorial(void)
 	//壁の終了処理
 	UninitMeshWall();
 
-	//爆発の終了処理
-	UninitExplosion();
-
-	//爆発の終了処理
+	//エフェクトの終了処理
 	UninitEffect();
 
+	//テキストの終了処理
 	UninitGameText();
-
 }
 
 //================================================================================================
@@ -138,6 +125,7 @@ void UninitTutorial(void)
 //=================================================================================================
 void UpdateTutorial(void)
 {
+	//モードの切り替え
 	if (GetFade() == FADE_NONE)
 	{
 		if (GetKeyboardTrigger(DIK_SPACE) || GetJoypadTrigger(0, JOYPADKEY_START))
@@ -146,6 +134,7 @@ void UpdateTutorial(void)
 			SetFade(MODE_GAME);
 		}
 	}
+
 	// カメラの更新処理
 	UpdateCamera();
 
@@ -161,16 +150,19 @@ void UpdateTutorial(void)
 	//プレイヤーの更新処理
 	UpdatePlayer();
 
-	UpdateBullet();
+	//氷の更新処理
+	UpdateIce();
 
+	//フィールドの更新処理
 	UpdateMeshField();
 
+	//壁の更新処理
 	UpdateMeshWall();
 
-	UpdateExplosion();
-
+	//エフェクトの更新処理
 	UpdateEffect();
 
+	//テキストの更新処理
 	UpdateGameText();
 
 }
@@ -181,28 +173,31 @@ void UpdateTutorial(void)
 void DrawTutorial(void)
 {
 
-	// カメラの設定
+	//カメラの設定
 	SetCamera();
 
+	//フィールドの描画処理
 	DrawMeshField();
 
+	//壁の描画処理
 	DrawMeshWall();
 
+	//エフェクトの描画処理
 	DrawEffect();
 
-	// 影の描画処理
-	DrawShadow();
-
-	// モデルの描画処理
+	//モデルの描画処理
 	DrawTutoModel();
 
-	DrawBullet();
-
-	DrawExplosion();
-
+	//プレイヤーの描画処理
 	DrawPlayer();
 
-	DrawGameText();
+	//氷の描画処理
+	DrawIce();
 
+	//影の描画処理
+	DrawShadow();
+
+	//テキストの描画処理
+	DrawGameText();
 }
 

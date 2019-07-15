@@ -97,18 +97,6 @@ void UpdateTitle(void)
 			SetFade(MODE_TUTORIAL);
 		}
 	}
-
-	static int nCnt = 0;
-
-	nCnt++;
-	//if (GetFade() == FADE_NONE)
-	//{
-	//	if ( nCnt >= 300 && GetFade() == FADE_NONE)
-	//	{
-	//		SetFade(MODE_RANKING);
-	//		nCnt = 0;
-	//	}
-	//}
 }
 
 //================================================================================================

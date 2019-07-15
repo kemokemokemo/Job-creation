@@ -304,15 +304,22 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//キーボード操作処理
 	InitKeyboard(hInstance, hWnd);
 
+	//ランキングの背景画面の初期化
 	InitRankbg();
 
+	//ランキングの初期化
 	InitRanking();
 
+	//ロードの初期化
 	InitLoad();
 
+	//セーブの初期化
 	InitSave();
 
+	//サウンドの初期化
 	InitSound(hWnd);
+
+	//デバイスの初期化
 	InitInput(hInstance,hWnd);
 
 	//フェードの初期化
@@ -325,25 +332,34 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=============================================================================
 void Uninit(void)
 {
-	//キーボード操作終了処理
+	//キーボードの終了処理
 	UninitKeyboard();
 
+	//タイトルの終了処理
 	UninitTitle();
 
+	//ゲームの終了処理
 	UninitGame();
 
+	//リザルトの終了処理
 	UninitResult();
 
+	//ゲームオーバーの終了処理
 	UninitGameover();
 
+	//ランキングの終了処理
 	UninitRanking();
 
+	//ランキング背景の終了処理
 	UninitRankbg();
 
+	//チュートリアルの終了処理
 	UninitTutorial();
 
+	//サウンド終了処理
 	UninitSound();
 
+	//デバイスの終了処理
 	UninitInput();
 
 #ifdef _DEBUG
@@ -368,6 +384,7 @@ void Uninit(void)
 		g_pD3D = NULL;
 	}
 
+	//フェードの終了処理
 	UninitFade();
 }
 
@@ -379,6 +396,7 @@ void Update(void)
 	//キーボードの更新処理
 	UpdateKeyboard();
 
+	//デバイスの更新処理
 	UpdateInput();
 
 	switch (g_mode)
@@ -450,6 +468,7 @@ void Draw(void)
 			break;
 		}
 
+		//フェードの描画処理
 		DrawFade();
 
 #ifdef _DEBUG
@@ -526,12 +545,12 @@ void SetMode(MODE mode)
 		break;
 
 	case MODE_TUTORIAL:
-	//	PlaySound(SOUND_LABEL_BGM005);
+		//PlaySound(SOUND_LABEL_BGM005);
 		InitTutorial();
 		break;
 
 	case MODE_RANKING:
-	//	PlaySound(SOUND_LABEL_BGM000);
+		//PlaySound(SOUND_LABEL_BGM000);
 		InitRanking();
 		AddRanking(0, 0);
 		break;
@@ -555,10 +574,10 @@ LPDIRECT3DDEVICE9 GetDevice(void)
 	return g_pD3DDevice;
 }
 
-#ifdef _DEBUG
 //=============================================================================
 // FPS表示処理
 //=============================================================================
+#ifdef _DEBUG
 void DrawFPS(void)
 {
 	RECT rect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };

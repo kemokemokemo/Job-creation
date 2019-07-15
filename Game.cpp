@@ -10,16 +10,13 @@
 #include "model.h"
 #include "input.h"
 #include "Shadow.h"
-#include "bullet.h"
 #include "meshField.h"
 #include "meshFwall.h"
-#include "Explosion.h"
 #include "effect.h"
 #include "player.h"
 #include "fade.h"
 #include "save.h"
 #include "road.h"
-#include "pause.h"
 #include "time.h"
 #include "ice.h"
 #include "GameText.h"
@@ -55,17 +52,11 @@ void InitGame(void)
 	//プレイヤーの初期化処理
 	InitPlayer();
 
-	//弾の初期化処理
-	InitBullet();
-
 	//フィールドの初期化処理
 	InitMeshField();
 
 	//壁の初期化処理
 	InitMeshWall();
-
-	//爆発の初期化処理
-	InitExplosion();
 
 	//エフェクトの初期化処理
 	InitEffect();
@@ -75,9 +66,6 @@ void InitGame(void)
 
 	//制限時間
 	AddTime(300);
-
-	//ポーズの初期化
-	InitPause();
 
 	//死体の初期化
 	InitIce();
@@ -93,19 +81,19 @@ void InitGame(void)
 	//残機設定
 	AddZanki(3);
 
-	//モデルの初期化処理
-	LoadObject();
-
+	//ステージ１の壁の生成
 	SetMeshWall(D3DXVECTOR3(1700.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, 1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(-1700.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, -1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(0.0f, 45.0f, -1700.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(0.0f, 45.0f, 1700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
+	//ステージ2の壁の生成
 	SetMeshWall(D3DXVECTOR3(5000.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, 1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(2000.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, -1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(3500.0f, 45.0f, -1700.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(3500.0f, 45.0f, 1700.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
+	//ステージ3の壁の生成
 	SetMeshWall(D3DXVECTOR3(-1800.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, 1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(-4800.0f, 45.0f, 0.0f), D3DXVECTOR3(0.0f, -1.57f, 0.0f));
 	SetMeshWall(D3DXVECTOR3(-3000.0f, 45.0f, -1700.0f), D3DXVECTOR3(0.0f, 3.14f, 0.0f));
@@ -137,17 +125,11 @@ void UninitGame(void)
 	//プレイヤーの終了処理
 	UninitPlayer();
 
-	//バレットの終了処理
-	UninitBullet();
-
 	//フィールドの終了処理
 	UninitMeshField();
 
 	//壁の終了処理
 	UninitMeshWall();
-
-	//爆発の終了処理
-	UninitExplosion();
 
 	//爆発の終了処理
 	UninitEffect();
@@ -163,12 +145,6 @@ void UninitGame(void)
 
 	//残機の終了処理
 	UninitZanki();
-
-	//ポーズの終了処理
-	UninitPause();
-
-	// 敵終了処理
-	//UninitEnemy();
 
 }
 
@@ -203,17 +179,11 @@ void UpdateGame(void)
 		//死体の更新処理
 		UpdateIce();
 
-		//バレットの更新処理
-		UpdateBullet();
-
 		//フィールドの更新処理
 		UpdateMeshField();
 
 		//壁の更新処理
 		UpdateMeshWall();
-
-		//爆発の更新処理
-		UpdateExplosion();
 
 		//エフェクトの更新処理
 		UpdateEffect();
@@ -227,32 +197,6 @@ void UpdateGame(void)
 		//残機の更新処理
 		UpdateZanki();
 
-		//ポーズの更新処理
-		UpdatePause();
-
-		//for (int nCntParticle = 0; nCntParticle < 1; nCntParticle++)
-		//{
-		//	D3DXCOLOR col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		//	float fRadius = 20;
-		//	int nLife = 20000;
-		//	float fAngle = 0;
-		//	float fSpeed = rand() % 100 / 1.0f;
-		//	fAngle = 0.4f * nCntParticle;
-		//	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, -2.0f, 0.0f);
-
-		//	D3DXVECTOR3 pos = D3DXVECTOR3(rand() % 200 / 0.4f, 500, rand() % 200 / 0.4f);
-
-		//	D3DXVECTOR3 pos2 = D3DXVECTOR3(rand() % 200 / -0.4f, 500, rand() % 200 / 0.4f);
-
-		//	D3DXVECTOR3 pos3 = D3DXVECTOR3(rand() % 200 / 0.4f, 500, rand() % 200 / -0.4f);
-
-		//	D3DXVECTOR3 pos4 = D3DXVECTOR3(rand() % 200 / -0.4f, 500, rand() % 200 / -0.4f);
-
-		//	SetParticle(pos, move, col, fRadius, nLife, 0, 1);
-		//	SetParticle(pos2, move, col, fRadius, nLife, 0, 1);
-		//	SetParticle(pos3, move, col, fRadius, nLife, 0, 1);
-		//	SetParticle(pos4, move, col, fRadius, nLife, 0, 1);
-		//}
 		break;
 
 	case GAMESTATE_END:
@@ -307,12 +251,6 @@ void DrawGame(void)
 	//エフェクトの描画処理
 	DrawEffect();
 
-	//バレットの描画処理
-	DrawBullet();
-
-	//爆発の描画処理
-	DrawExplosion();
-
 	//死体の描画処理
 	DrawIce();
 
@@ -328,8 +266,6 @@ void DrawGame(void)
 	//影の描画処理
 	DrawShadow();
 
-	//ポーズの描画処理
-	DrawPause();
 }
 
 void SetGameState(GAMESTATE state)

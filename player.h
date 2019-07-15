@@ -154,5 +154,20 @@ void UpdateTitlePlayer(void);
 //プレイヤ-の情報
 PLAYER *GetPlayer(void);
 
+void CulFrame(void);			// フレーム計算
+
+//プレイヤ-の移動情報
+void PlayerMove(void);
+
+//プレイヤ-の当たり判定
+void PlayerCollision(void);
+
+//エフェクトの場所
+void EffectRound(void);
+
+//プレイヤ-のモーション
+void PlayerMotionPlay(void);
+
+//プレイヤ-の死亡情報
 void PlayerDeth(void);
 #endif

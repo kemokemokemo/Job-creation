@@ -11,7 +11,7 @@
 //=============================================================================
 #define	TEXTURE_EFFECT		"DATA/TEX/effect000.jpg"		// 読み込むテクスチャファイル名
 #define	TEXTURE_EFFECT2		"DATA/TEX/effect001.jpg"		// 読み込むテクスチャファイル名
-#define	TEXTURE_EFFECT3		"DATA/TEX/efect002.jpg"		// 読み込むテクスチャファイル名
+#define	TEXTURE_EFFECT3		"DATA/TEX/efect002.jpg"			// 読み込むテクスチャファイル名
 #define	TEXTURE_EFFECT4		"DATA/TEX/effect003.jpg"		// 読み込むテクスチャファイル名
 #define	TEXTURE_EFFECT5		"DATA/TEX/effect004.jpg"		// 読み込むテクスチャファイル名
 #define	TEXTURE_EFFECT6		"DATA/TEX/effect005.jpg"		// 読み込むテクスチャファイル名
@@ -35,9 +35,10 @@ EFFECT					g_aEffect[MAX_EFFECT];		// エフェクト情報
 //=============================================================================
 void InitEffect(void)
 {
-
+	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//変数の初期化
 	for (int nCntEffect = 0; nCntEffect < MAX_EFFECT; nCntEffect++)
 	{
 		g_aEffect[nCntEffect].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -109,6 +110,7 @@ void UninitEffect(void)
 //=============================================================================
 void UpdateEffect(void)
 {
+	//変数宣言
 	int nCntEffect = 0;
 	int nLife = 0;
 	VERTEX_3D *pVtx;

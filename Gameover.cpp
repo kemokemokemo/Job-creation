@@ -4,7 +4,7 @@
 // Author  Kimura Kouta
 //
 //====================================================================================================
-#include"Gameover.h"//インクルードファイル
+#include"Gameover.h"
 #include"input.h"
 #include "fade.h"
 #include "light.h"
@@ -48,8 +48,8 @@ void InitGameover(void)
 	InitGameText();
 	InitMeshWall();
 
+	//テキストの設定
 	SetGameText(D3DXVECTOR3(670.0f, 250.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 280, 180, 1);
-
 	SetGameText(D3DXVECTOR3(1000.0f, 600.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 210, 180, 3);
 
 	//テクスチャの読み込み
@@ -150,12 +150,10 @@ void UpdateGameover(void)
 //=================================================================================================
 void DrawGameover(void)
 {
+
 	SetCamera();
-
 	DrawMeshField();
-
 	DrawMeshWall();
-
 	DrawGameText();
 
 	//	デバイスを取得する

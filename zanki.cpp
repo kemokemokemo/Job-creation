@@ -12,10 +12,10 @@
 //=============================================================================
 #define	TEXTURE_ZANKI		"DATA/TEX/number002.png"	// 読み込むテクスチャファイル名
 #define MAX_ZANKI   (1)
-#define ZANKI_POS_X	(1150)			    //ポリゴンの表示位置(左上X)
-#define ZANKI_POS_Y	(10)			    //ポリゴンの表示位置(左上Y)
-#define ZANKI_SIZE_X	(60)			//ポリゴンのサイズ(横幅)
-#define ZANKI_SIZE_Y	(100)			//ポリゴンのサイズ(立幅)
+#define ZANKI_POS_X	(1150)								//ポリゴンの表示位置(左上X)
+#define ZANKI_POS_Y	(10)								//ポリゴンの表示位置(左上Y)
+#define ZANKI_SIZE_X	(60)							//ポリゴンのサイズ(横幅)
+#define ZANKI_SIZE_Y	(100)							//ポリゴンのサイズ(立幅)
 #define ZANKICOLOR_TEX   (255)
 
 //=============================================================================
@@ -49,10 +49,12 @@ int g_nCntzanki;
 //=============================================================================
 void InitZanki(void)
 {
+	//変数宣言
 	int g_zankirState = 0;
 	int nCntzanki = 0;
 	int g_nzanki = 0;
 
+	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	// テクスチャの読み込み

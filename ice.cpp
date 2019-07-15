@@ -11,6 +11,7 @@
 // マクロ定義
 //=============================================================================
 #define MAX_ICE	(1)
+#define	TEXTURE_ICE	"data/TEX/thEIAMVSCA.jpg"		// 読み込むテクスチャファイル名
 
 //=============================================================================
 // マクロ定義
@@ -42,7 +43,7 @@ void InitIce(void)
 		g_Ice[nCntIce].bUse = false;
 
 		//Xファイルの読み込み
-		D3DXLoadMeshFromX("DATA/MODEL/ice.x",
+		D3DXLoadMeshFromX("DATA/MODEL/GAME/ice.x",
 			D3DXMESH_SYSTEMMEM,
 			pDevice,
 			NULL,
@@ -105,12 +106,7 @@ void InitIce(void)
 	g_pMeshIce->UnlockVertexBuffer();
 
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEX/thEIAMVSCA.jpg", &g_pTextureIce);
-
-	/*if (g_Ice.bUse == true)
-	{
-		g_Ice.IdxShadow = SetShadow(g_Ice.pos, g_Ice.rot);
-	}*/
+	D3DXCreateTextureFromFile(pDevice, TEXTURE_ICE, &g_pTextureIce);
 }
 
 //=============================================================================
@@ -144,47 +140,35 @@ void UninitIce(void)
 //=============================================================================
 void UpdateIce(void)
 {
-
 	//プレイヤーの取得
 	PLAYER * pPlayer;
 	pPlayer = GetPlayer();
 	int nCntIce = 0;
 
-		//重力処理
+	//重力処理
+	g_Ice[nCntIce].move.y -= 0.1f;
 
-		g_Ice[nCntIce].move.y -= 0.1f;
+	//前回のポジション取得
+	g_Ice[nCntIce].posOld = g_Ice[nCntIce].pos;
 
+	//移動処理
+	g_Ice[nCntIce].pos += g_Ice[nCntIce].move;
 
-		g_Ice[nCntIce].posOld = g_Ice[nCntIce].pos;
+	//プレイヤーの情報取得
+	g_Ice[nCntIce].pos = pPlayer->pos;
+	g_Ice[nCntIce].rot = pPlayer->rot;
 
-		g_Ice[nCntIce].pos += g_Ice[nCntIce].move;
+	//氷の破棄
+	if (g_Ice[nCntIce].nLife <= 0)
+	{
+		g_Ice[nCntIce].bUse = false;
+	}
 
-		g_Ice[nCntIce].pos = pPlayer->pos;
-
-		g_Ice[nCntIce].rot = pPlayer->rot;
-
-		/*if (g_Ice.bUse == true)
-		{
-			SetPositionShadow(g_Ice.IdxShadow, g_Ice.pos);
-		}*/
-
-		if (g_Ice[nCntIce].nLife <= 0)
-		{
-			g_Ice[nCntIce].bUse = false;
-		}
-
-
-
-		if (g_Ice[nCntIce].pos.y < 0.0f)
-		{
-			g_Ice[nCntIce].pos.y = 0.0f;
-		}
-
-		//if (pPlayer->nCntDeth == 30)
-		//{
-		//	g_Ice[nCntIce].move.y += 1;
-		//}
-	
+	//氷の移動制限
+	if (g_Ice[nCntIce].pos.y < 0.0f)
+	{
+		g_Ice[nCntIce].pos.y = 0.0f;
+	}
 }
 
 //=============================================================================
@@ -196,15 +180,13 @@ void DrawIce(void)
 	D3DXMATRIX mtxRot, mtxTrans;
 	D3DXMATERIAL *pMat;
 	D3DMATERIAL9 matDef;
+
 	for (int nCntIce = 0; nCntIce < MAX_ICE; nCntIce++)
 	{
 		if (g_Ice[nCntIce].bUse == true)
 		{
 			//ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_Ice[nCntIce].mtxWorldObject);
-
-			// スケールを反映
-
 
 			//回転を反映
 			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Ice[nCntIce].rot.y, g_Ice[nCntIce].rot.x, g_Ice[nCntIce].rot.z);
@@ -250,7 +232,7 @@ ICE *GetIce(void)
 }
 
 //=============================================================================
-// 氷
+// 氷のセット
 //=============================================================================
 void SetIce(D3DXVECTOR3 pos, D3DXVECTOR3 move, D3DXVECTOR3 rot)
 {

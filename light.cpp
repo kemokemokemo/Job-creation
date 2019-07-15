@@ -36,15 +36,17 @@ void InitLight(void)
 
 	}
 
-		// ライトの方向の設定
+		// 1つ目のライトの方向の設定
 		vecDir = D3DXVECTOR3(0.20f, -0.80f, 0.40f);
 		D3DXVec3Normalize(&vecDir, &vecDir);
 		g_Light[0].Direction = vecDir;
 
+		// 2つ目のライトの方向の設定
 		vecDir = D3DXVECTOR3(-0.20f, 0.80f, -0.40f);
 		D3DXVec3Normalize(&vecDir, &vecDir);
 		g_Light[1].Direction = vecDir;
 
+		// 3つ目のライトの方向の設定
 		vecDir = D3DXVECTOR3(0.90f, -0.10f, 0.40f);
 		D3DXVec3Normalize(&vecDir, &vecDir);
 		g_Light[2].Direction = vecDir;
